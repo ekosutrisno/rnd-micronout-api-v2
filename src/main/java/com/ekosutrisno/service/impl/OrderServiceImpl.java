@@ -2,9 +2,7 @@ package com.ekosutrisno.service.impl;
 
 import com.ekosutrisno.model.OrderDetailEntity;
 import com.ekosutrisno.model.OrderEntity;
-import com.ekosutrisno.model.dto.OrderRequest;
-import com.ekosutrisno.model.dto.ResponseOrder;
-import com.ekosutrisno.model.dto.WebResponse;
+import com.ekosutrisno.model.dto.*;
 import com.ekosutrisno.repository.OrderDetailEntityRepository;
 import com.ekosutrisno.repository.OrderEntityRepository;
 import com.ekosutrisno.service.OrderService;
@@ -17,6 +15,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Eko Sutrisno
@@ -93,5 +92,69 @@ public class OrderServiceImpl implements OrderService {
             ));
         });
         return Boolean.TRUE;
+    }
+
+    @Override
+    public Boolean updateOrder(String orderId, OrderUpdateRequest orderUpdateRequest) {
+        Optional<OrderEntity> orderOptional = orderRepository
+                .findById(orderId);
+
+        if (orderOptional.isPresent()) {
+
+            OrderEntity order = orderOptional.get();
+            order.setOrderName(orderUpdateRequest.getOrderName());
+            order.setOrderDescription(orderUpdateRequest.getOrderDescription());
+
+            order.setModifiedBy("EXO-BOOT-MDU-3301");
+            order.setModifiedDate(new Date());
+
+            orderRepository.update(order);
+
+            return Boolean.TRUE;
+        }
+
+        return Boolean.FALSE;
+    }
+
+    @Override
+    public Boolean updateOrderDetail(String orderId, String orderDetailId, OrderDetailRequest orderDetailRequest) {
+        Optional<OrderDetailEntity> optionalOrderDetailEntity = orderDetailRepository
+                .findByOrderDetailIdAndOrderId(orderDetailId, orderId);
+
+        if (optionalOrderDetailEntity.isPresent()) {
+            OrderDetailEntity orderDetail = optionalOrderDetailEntity.get();
+
+            orderDetail.setOrderDetailItem(orderDetailRequest.getOrderDetailItem());
+            orderDetail.setOrderDetailItemQuantity(orderDetailRequest.getOrderDetailItemQuantity());
+            orderDetail.setOrderDetailItemPrice(orderDetailRequest.getOrderDetailItemPrice() * orderDetailRequest.getOrderDetailItemQuantity());
+            orderDetail.setOrderDetailMerchant(orderDetailRequest.getOrderDetailMerchant());
+
+            Optional<OrderEntity> order = orderRepository.findById(orderId);
+            if (order.isPresent()) {
+                order.get().setModifiedBy("EXO-BOOT-MDD-3301");
+                order.get().setModifiedDate(new Date());
+
+                orderRepository.update(order.get());
+                orderDetailRepository.update(orderDetail);
+
+                return Boolean.TRUE;
+            }
+        }
+
+        return Boolean.FALSE;
+    }
+
+    @Override
+    public Boolean cancelOrder(String orderId) {
+        Optional<OrderEntity> order = orderRepository
+                .findById(orderId);
+
+        if (order.isPresent()) {
+            order.get().setStatus(Boolean.FALSE);
+            orderRepository.update(order.get());
+
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 }

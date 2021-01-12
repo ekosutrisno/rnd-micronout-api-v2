@@ -1,5 +1,6 @@
 package com.ekosutrisno.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.core.annotation.Introspected;
 
 import javax.validation.constraints.NotBlank;
@@ -15,8 +16,11 @@ import java.util.List;
 public class OrderRequest {
     @NotNull
     @NotBlank
+    @JsonProperty(index = 0)
     private String orderName;
+    @JsonProperty(index = 1)
     private List<OrderDetailRequest> orderDetail;
+    @JsonProperty(index = 2)
     private String orderDescription;
 
     /**

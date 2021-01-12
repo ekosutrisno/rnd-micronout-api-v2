@@ -5,6 +5,7 @@ import io.micronaut.data.annotation.Repository;
 import io.micronaut.data.repository.CrudRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The interface Order detail entity repository.
@@ -21,4 +22,13 @@ public interface OrderDetailEntityRepository extends CrudRepository<OrderDetailE
      * @return the list
      */
     List<OrderDetailEntity> findByOrderId(String orderId);
+
+    /**
+     * Find by order detail id and order id optional.
+     *
+     * @param orderDetailId the order detail id
+     * @param orderId       the order id
+     * @return the optional
+     */
+    Optional<OrderDetailEntity> findByOrderDetailIdAndOrderId(String orderDetailId, String orderId);
 }

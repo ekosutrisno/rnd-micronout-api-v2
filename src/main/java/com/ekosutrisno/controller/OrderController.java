@@ -1,7 +1,6 @@
 package com.ekosutrisno.controller;
 
-import com.ekosutrisno.model.dto.OrderRequest;
-import com.ekosutrisno.model.dto.WebResponse;
+import com.ekosutrisno.model.dto.*;
 import com.ekosutrisno.service.OrderService;
 import io.micronaut.data.model.Pageable;
 import io.micronaut.http.annotation.*;
@@ -11,9 +10,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-
-import java.util.HashMap;
-import java.util.Map;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 import static io.micronaut.http.HttpStatus.CREATED;
 import static io.micronaut.http.HttpStatus.OK;
@@ -39,18 +37,60 @@ public class OrderController {
                                         @QueryValue(value = "size", defaultValue = "10") int size) {
 
         Pageable pageable = Pageable.from(page, size);
-
         return orderService.getAllOrder(pageable);
     }
 
     @Post
     @Status(CREATED)
-    public Map<String, Object> sendOrder(@Valid @Body OrderRequest orderRequest) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", orderService.sendOrder(orderRequest));
-        response.put("message", "Order has been Sent.");
-
-        return response;
+    @Operation(summary = "Send Order", description = "Send and create order")
+    public ResponseInfo sendOrder(@Valid @Body OrderRequest orderRequest) {
+        String MESSAGE = "Order has been Sent.";
+        return new ResponseInfo(
+                orderService.sendOrder(orderRequest),
+                MESSAGE,
+                new Date()
+        );
     }
 
+    @Put("/{orderId}")
+    @Status(OK)
+    @Operation(summary = "Update Order", description = "Update orderName and orderDescription")
+    public ResponseInfo updateOrder(@PathVariable("orderId") @NotNull String orderId,
+                                    @Valid @Body OrderUpdateRequest orderRequest) {
+
+        String MESSAGE = "Order has been Updated.";
+        return new ResponseInfo(
+                orderService.updateOrder(orderId, orderRequest),
+                MESSAGE,
+                new Date()
+        );
+    }
+
+    @Put("/{orderId}/{orderDetailId}")
+    @Status(OK)
+    @Operation(summary = "Update OrderDetail", description = "Update order detail")
+    public ResponseInfo updateOrder(@PathVariable("orderId") @NotNull String orderId,
+                                    @PathVariable("orderDetailId") @NotNull String orderDetailId,
+                                    @Valid @Body OrderDetailRequest orderDetailRequest) {
+
+        String MESSAGE = "Order Detail has been Updated.";
+        return new ResponseInfo(
+                orderService.updateOrderDetail(orderId, orderDetailId, orderDetailRequest),
+                MESSAGE,
+                new Date()
+        );
+    }
+
+    @Delete("/{orderId}")
+    @Status(OK)
+    @Operation(summary = "Cancel Order", description = "Cancel Order and set Status = false")
+    public ResponseInfo updateOrder(@PathVariable("orderId") @NotNull String orderId) {
+
+        String MESSAGE = "Order Detail has been Canceled.";
+        return new ResponseInfo(
+                orderService.cancelOrder(orderId),
+                MESSAGE,
+                new Date()
+        );
+    }
 }
