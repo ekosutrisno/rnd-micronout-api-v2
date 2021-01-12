@@ -12,8 +12,9 @@ import io.micronaut.data.repository.PageableRepository;
 import javax.annotation.Nonnull;
 
 /**
- * @author Eko Sutrisno
- * Tuesday, 12/01/2021 10:51
+ * The interface Order entity repository.
+ *
+ * @author Eko Sutrisno Tuesday, 12/01/2021 10:51
  */
 @Repository
 public interface OrderEntityRepository extends CrudRepository<OrderEntity, String>, PageableRepository<OrderEntity, String> {
