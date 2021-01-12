@@ -1,7 +1,7 @@
 package com.ekosutrisno.service;
 
-import com.ekosutrisno.model.OrderEntity;
 import com.ekosutrisno.model.dto.OrderRequest;
+import com.ekosutrisno.model.dto.WebResponse;
 import io.micronaut.data.model.Pageable;
 
 /**
@@ -9,7 +9,7 @@ import io.micronaut.data.model.Pageable;
  * Tuesday, 12/01/2021 10:56
  */
 public interface OrderService {
-    Iterable<OrderEntity> getAllOrder(Pageable pageable);
+    WebResponse getAllOrder(Pageable pageable);
 
     Boolean sendOrder(OrderRequest orderRequest);
 }

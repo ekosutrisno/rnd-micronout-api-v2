@@ -9,9 +9,7 @@ import java.util.UUID;
  */
 
 @Entity
-@Table(name = OrderDetailEntity.TABLE_NAME,
-        uniqueConstraints = @UniqueConstraint(name = "order_id_unique", columnNames = "order_id")
-)
+@Table(name = OrderDetailEntity.TABLE_NAME)
 public class OrderDetailEntity {
     static final String TABLE_NAME = "t_order_detail";
 
@@ -39,6 +37,14 @@ public class OrderDetailEntity {
 
     public OrderDetailEntity(String orderDetailId, String orderId, String orderDetailItem, Integer orderDetailItemQuantity, Double orderDetailItemPrice, String orderDetailMerchant) {
         this.orderDetailId = orderDetailId;
+        this.orderId = orderId;
+        this.orderDetailItem = orderDetailItem;
+        this.orderDetailItemQuantity = orderDetailItemQuantity;
+        this.orderDetailItemPrice = orderDetailItemPrice;
+        this.orderDetailMerchant = orderDetailMerchant;
+    }
+
+    public OrderDetailEntity(String orderId, String orderDetailItem, Integer orderDetailItemQuantity, Double orderDetailItemPrice, String orderDetailMerchant) {
         this.orderId = orderId;
         this.orderDetailItem = orderDetailItem;
         this.orderDetailItemQuantity = orderDetailItemQuantity;

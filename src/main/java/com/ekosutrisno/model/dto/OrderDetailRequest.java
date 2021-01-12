@@ -1,13 +1,27 @@
 package com.ekosutrisno.model.dto;
 
+import io.micronaut.core.annotation.Introspected;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * @author Eko Sutrisno
  * Tuesday, 12/01/2021 11:00
  */
+@Introspected
 public class OrderDetailRequest {
+    @NotBlank
+    @NotNull
     private String orderDetailItem;
+    @NotBlank
+    @NotNull
     private Integer orderDetailItemQuantity;
+    @NotBlank
+    @NotNull
     private Double orderDetailItemPrice;
+    @NotBlank
+    @NotNull
     private String orderDetailMerchant;
 
     public String getOrderDetailItem() {

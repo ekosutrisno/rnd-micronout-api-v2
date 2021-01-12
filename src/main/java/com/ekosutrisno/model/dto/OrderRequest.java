@@ -1,24 +1,22 @@
 package com.ekosutrisno.model.dto;
 
+import io.micronaut.core.annotation.Introspected;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
  * @author Eko Sutrisno
  * Tuesday, 12/01/2021 10:59
  */
+@Introspected
 public class OrderRequest {
-    private String invoiceNumber;
+    @NotNull
+    @NotBlank
     private String orderName;
     private List<OrderDetailRequest> orderDetail;
     private String orderDescription;
-
-    public String getInvoiceNumber() {
-        return invoiceNumber;
-    }
-
-    public void setInvoiceNumber(String invoiceNumber) {
-        this.invoiceNumber = invoiceNumber;
-    }
 
     public String getOrderName() {
         return orderName;
