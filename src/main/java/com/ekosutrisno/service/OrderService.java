@@ -6,10 +6,6 @@ import com.ekosutrisno.model.dto.OrderUpdateRequest;
 import com.ekosutrisno.model.dto.WebResponse;
 import io.micronaut.data.model.Pageable;
 
-/**
- * @author Eko Sutrisno
- * Tuesday, 12/01/2021 10:56
- */
 public interface OrderService {
     WebResponse getAllOrder(Pageable pageable);
 

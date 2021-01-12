@@ -17,10 +17,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * @author Eko Sutrisno
- * Tuesday, 12/01/2021 11:04
- */
 @Singleton
 public class OrderServiceImpl implements OrderService {
 
@@ -150,10 +146,13 @@ public class OrderServiceImpl implements OrderService {
                 .findById(orderId);
 
         if (order.isPresent()) {
-            order.get().setStatus(Boolean.FALSE);
-            orderRepository.update(order.get());
+            if (order.get().getStatus()) {
 
-            return Boolean.TRUE;
+                order.get().setStatus(Boolean.FALSE);
+                orderRepository.update(order.get());
+
+                return Boolean.TRUE;
+            }
         }
         return Boolean.FALSE;
     }

@@ -17,10 +17,6 @@ import static io.micronaut.http.HttpStatus.CREATED;
 import static io.micronaut.http.HttpStatus.OK;
 import static io.micronaut.http.MediaType.APPLICATION_JSON;
 
-/**
- * @author Eko Sutrisno
- * Tuesday, 12/01/2021 11:08
- */
 @Validated
 @Controller("/api/${api.version:v1}/orders")
 @Produces(APPLICATION_JSON)

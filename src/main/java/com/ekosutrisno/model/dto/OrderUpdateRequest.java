@@ -3,10 +3,6 @@ package com.ekosutrisno.model.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.core.annotation.Introspected;
 
-/**
- * @author Eko Sutrisno
- * Tuesday, 12/01/2021 16:48
- */
 @Introspected
 public class OrderUpdateRequest {
     @JsonProperty(index = 0)
