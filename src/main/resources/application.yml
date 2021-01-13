@@ -1,6 +1,6 @@
 micronaut:
   application:
-    name: API-MICRONAUT-V2
+    name: API-MICRONAUT-V3
   server:
     port: 8880
   router:

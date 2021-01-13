@@ -36,6 +36,13 @@ public class OrderController {
         return orderService.getAllOrder(pageable);
     }
 
+    @Get("/{orderId}")
+    @Status(OK)
+    @Operation(summary = "Get One Order", description = "Get one order with status True")
+    public ResponseOrder retrieveOneOrder(@NotNull @PathVariable("orderId") String orderId) {
+        return orderService.getOneOrderById(orderId);
+    }
+
     @Post
     @Status(CREATED)
     @Operation(summary = "Send Order", description = "Send and create order")

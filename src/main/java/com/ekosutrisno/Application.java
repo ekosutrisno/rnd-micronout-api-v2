@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.info.License;
         info = @Info(
                 title = "API V2",
                 version = "0.0",
-                description = "Development",
+                description = "Research And Development",
                 license = @License(name = "Apache 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0"),
                 contact = @Contact(url = "", name = "Eko Sutrisno", email = "ekosutrisno801@gmail.com")
         )

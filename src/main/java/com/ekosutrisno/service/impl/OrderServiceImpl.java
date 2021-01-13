@@ -64,6 +64,33 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public ResponseOrder getOneOrderById(String orderId) {
+        Optional<OrderEntity> orderEntityOptional = orderRepository
+                .findById(orderId);
+
+        if (orderEntityOptional.isPresent()) {
+            OrderEntity order = orderEntityOptional.get();
+
+            if (order.getStatus()) {
+
+                return new ResponseOrder(
+                        order.getOrderId(),
+                        order.getInvoiceNumber(),
+                        order.getOrderName(),
+                        orderDetailRepository.findByOrderId(order.getOrderId()),
+                        order.getOrderDescription(),
+                        order.getCreatedDate(),
+                        order.getCreatedBy(),
+                        order.getModifiedDate(),
+                        order.getModifiedBy()
+                );
+            }
+        }
+
+        return new ResponseOrder();
+    }
+
+    @Override
     @Transactional(value = Transactional.TxType.REQUIRED)
     public Boolean sendOrder(OrderRequest orderRequest) {
         OrderEntity order = new OrderEntity();
@@ -91,6 +118,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public Boolean updateOrder(String orderId, OrderUpdateRequest orderUpdateRequest) {
         Optional<OrderEntity> orderOptional = orderRepository
                 .findById(orderId);
@@ -113,6 +141,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public Boolean updateOrderDetail(String orderId, String orderDetailId, OrderDetailRequest orderDetailRequest) {
         Optional<OrderDetailEntity> optionalOrderDetailEntity = orderDetailRepository
                 .findByOrderDetailIdAndOrderId(orderDetailId, orderId);
@@ -141,6 +170,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public Boolean cancelOrder(String orderId) {
         Optional<OrderEntity> order = orderRepository
                 .findById(orderId);
